@@ -52,21 +52,25 @@ describe("Asch JS", function () {
 			});
 
 			it("should return Buffer of simply transaction and buffer most be 117 length", function () {
-				var transaction = {
-					type: 0,
-					amount: 1000,
-					recipientId: "58191285901858109",
-					timestamp: 141738,
-					asset: {},
-					senderPublicKey: "5d036a858ce89f844491762eb89e2bfbd50a4a0a0da658e4b2628b25b117ae09",
-					signature: "618a54975212ead93df8c881655c625544bce8ed7ccdfe6f08a42eecfb1adebd051307be5014bb051617baf7815d50f62129e70918190361e5d4dd4796541b0a",
-					id: "13987348420913138422"
-				};
+			var transaction = {
+				id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
+				timestamp:67290342,
+				senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
+				senderId:"ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
+				message:null,
+				fee:10000000,
+				recipientId:"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB",
+				amount:200000000000,
+				asset:{},
+				type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
+				signatures:null,
+				args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
+			}
 
 				bytes = getBytes(transaction);
 				(bytes).should.be.ok;
 				(bytes).should.be.type("object");
-				(bytes.length).should.be.equal(117);
+				(bytes.length).should.be.equal(101);
 			});
 
 			it("should return Buffer of transaction with second signature and buffer most be 181 length", function () {
