@@ -586,10 +586,6 @@ describe("Asch JS", function () {
 					(delegateTrs).should.be.type("object");
 				});
 
-				it("shoud have amount equal 0", function () {
-					(delegateTrs).should.have.property("amount").and.type("number").and.equal(0);
-				})
-
 				it("should have type equal 0", function () {
 					(delegateTrs).should.have.property("type").and.type("number").and.equal(2);
 				});
