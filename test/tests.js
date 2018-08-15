@@ -426,38 +426,49 @@ describe("Asch JS", function () {
 					(trs.args).should.be.an.Array();
 				});
 
-				describe("dapp asset", function () {
+				describe("dapp args", function () {
 					it("should be ok", function () {
-						(trs.asset.dapp).should.be.ok;
+						(trs.args).should.be.ok;
 					})
 
-					it("should be object", function () {
-						(trs.asset.dapp).should.be.type("object");
+					it("should be an array", function () {
+						(trs.args).should.be.an.Array()
 					});
 
-					it("should have category property", function () {
-						(trs.asset.dapp).should.have.property("category").and.equal(options.category);
+					// options.name,
+					// options.description,
+					// options.link,
+					// options.icon,
+					// options.delegates,
+					// options.unlockDelegates
+
+					it("should have name item", function () {
+						(trs.args[0]).should.be.type("string").and.equal(options.name);
 					});
 
-					it("should have name property", function () {
-						(trs.asset.dapp).should.have.property("name").and.equal(options.name);
+					it("should have description item", function () {
+						(trs.args[1]).should.be.type("string").and.equal(options.description)
+					})
+
+					it("should have link item", function () {
+						(trs.args[2]).should.be.type("string").and.equal(options.link);
 					});
 
-					it("should have tags property", function () {
-						(trs.asset.dapp).should.have.property("tags").and.equal(options.tags);
+					it("should have icon item", function () {
+						(trs.args[3]).should.be.type("string").and.equal(options.icon);
 					});
 
-					it("should have type property", function () {
-						(trs.asset.dapp).should.have.property("type").and.equal(options.type);
+					it("should have delegates item", function () {
+						(trs.args[4]).should.be.an.Array().and.equal(options.delegates)
+					})
+
+					it("should have unlockDelegates item", function () {
+						(trs.args[5]).should.be.type("number").and.equal(options.unlockDelegates);
 					});
 
-					it("should have link property", function () {
-						(trs.asset.dapp).should.have.property("link").and.equal(options.link);
-					});
 
-					it("should have icon property", function () {
-						(trs.asset.dapp).should.have.property("icon").and.equal(options.icon);
-					});
+
+
 				});
 
 				it("should have signature as hex string in signatures array", function () {
