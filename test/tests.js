@@ -1264,7 +1264,7 @@ describe("Asch JS", function () {
 			var deleteVote = vote.deleteVote,
 			vt = null,
 			publicKey = asch.crypto.getKeys("secret").publicKey,
-			publicKeys = ["+" + publicKey];
+			publicKeys = ["-" + publicKey];
 
 			it('should be ok', function () {
 				(deleteVote).should.be.ok;
