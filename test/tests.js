@@ -549,7 +549,7 @@ describe("Asch JS", function () {
 
 		describe("#createDelegate", function () {
 			var createDelegate = delegate.createDelegate;
-			var delegateTrs = null;
+
 
 			it("should be ok", function () {
 				(createDelegate).should.be.ok;
@@ -567,17 +567,15 @@ describe("Asch JS", function () {
 				var keys = asch.crypto.getKeys("secret");
 				var secondKeys = asch.crypto.getKeys("secret 2");
 				var delegateTrs = null;
-
+	
 				beforeEach('setup delegate.js', function () {
-					delegateTrs = createDelegate("secret", null);
+					delegateTrs = createDelegate("secret", "secret 2");
 				})
-
+	
 				afterEach('clenup delegate.js', function () {
-					delegateTrs = null
+					delegateTrs = null;
 				})
-
-
-
+	
 				it("should be ok", function () {
 					(delegateTrs).should.be.ok;
 				});
@@ -586,8 +584,8 @@ describe("Asch JS", function () {
 					(delegateTrs).should.be.type("object");
 				});
 
-				it("should have type equal 0", function () {
-					(delegateTrs).should.have.property("type").and.type("number").and.equal(2);
+				it("should have type equal 10", function () {
+					(delegateTrs).should.have.property("type").and.type("number").and.equal(10);
 				});
 
 				it("should have timestamp number", function () {
@@ -606,10 +604,10 @@ describe("Asch JS", function () {
 					}).and.equal(keys.publicKey);
 				});
 
-				it("should have signature in hex", function () {
-					(delegateTrs).should.have.property("signature").and.type("string").and.match(function () {
+				it("should have signature in hex in signatures array", function () {
+					(delegateTrs).should.have.property("signatures").and.be.an.Array().and.match(function () {
 						try {
-							new Buffer(delegateTrs.signature, "hex");
+							new Buffer(delegateTrs.signatures[0], "hex");
 						} catch (e) {
 							return false;
 						}
@@ -619,9 +617,9 @@ describe("Asch JS", function () {
 				});
 
 				it("should have second signature in hex", function () {
-					(delegateTrs).should.have.property("signSignature").and.type("string").and.match(function () {
+					(delegateTrs).should.have.property("secondSignature").and.match(function () {
 						try {
-							new Buffer(delegateTrs.signSignature, "hex");
+							new Buffer(delegateTrs.secondSignature, "hex");
 						} catch (e) {
 							return false;
 						}
@@ -630,9 +628,9 @@ describe("Asch JS", function () {
 					});
 				});
 
-				it("should have delegate asset", function () {
-					(delegateTrs).should.have.property("asset").and.type("object");
-					(delegateTrs.asset).should.have.have.property("delegate");
+				it("should have args array", function () {
+					(delegateTrs).should.have.property("args").and.be.an.Array();
+					(delegateTrs.args.length).should.equal(0);
 				})
 
 				it("should be signed correctly", function () {
