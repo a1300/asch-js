@@ -660,7 +660,7 @@ describe("Asch JS", function () {
 
 
 
-	describe("signature.js", function () {
+	describe.skip("signature.js", function () {
 		var signature = asch.signature;
 		it("should be ok", function () {
 			(signature).should.be.ok;
@@ -928,8 +928,8 @@ describe("Asch JS", function () {
 					(trs.id).should.be.type("string");
 				});
 
-				it("should have type as number and eqaul 0", function () {
-					(trs.type).should.be.type("number").and.equal(0);
+				it("should have type as number and eqaul 1", function () {
+					(trs.type).should.be.type("number").and.equal(1);
 				});
 
 				it("should have timestamp as number", function () {
