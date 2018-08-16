@@ -1171,7 +1171,7 @@ describe("Asch JS", function () {
 					}).and.equal(publicKey);
 				});
 
-				it("should have signature hex string", function () {
+				it("should have signatures array with hex string", function () {
 					(vt).should.have.property("signatures").and.be.an.Array().and.match(function () {
 						try {
 							new Buffer(vt.signatures[0], "hex");
@@ -1234,7 +1234,7 @@ describe("Asch JS", function () {
 						(vt.args).should.be.not.empty;
 					});
 
-					it("should contains one element", function () {
+					it("should contain one element", function () {
 						(vt.args.length).should.be.equal(1);
 					});
 
@@ -1259,6 +1259,123 @@ describe("Asch JS", function () {
 				})
 			});
 		});
+
+		describe('#deleteVote', function () {
+			var deleteVote = vote.deleteVote,
+			vt = null,
+			publicKey = asch.crypto.getKeys("secret").publicKey,
+			publicKeys = ["+" + publicKey];
+
+			it('should be ok', function () {
+				(deleteVote).should.be.ok;
+			});
+
+			it('should be function', function () {
+				(deleteVote).should.be.type("function");
+			});
+
+			it('should delete vote', function () {
+				vt = deleteVote(publicKeys, "secret", "second secret");
+				vt.should.be.ok;
+			});
+
+			describe('returned deleted vote', function () {
+				it("should be ok", function () {
+					(vt).should.be.ok;
+				});
+
+				it("should be object", function () {
+					(vt).should.be.type("object");
+				});
+
+				it("should have type number equal to 12", function () {
+					(vt).should.have.property("type").and.be.type("number").and.equal(12);
+				});
+
+				it("should have timestamp number", function () {
+					(vt).should.have.property("timestamp").and.be.type("number");
+				});
+
+				it("should have senderPublicKey hex string equal to sender public key", function () {
+					(vt).should.have.property("senderPublicKey").and.be.type("string").and.match(function () {
+						try {
+							new Buffer(vt.senderPublicKey, "hex");
+						} catch (e) {
+							return false;
+						}
+
+						return true;
+					}).and.equal(publicKey)
+				});
+
+				it("should have signatures array with hex string", function () {
+					(vt).should.have.property("signatures").and.be.an.Array().and.match(function () {
+						try {
+							new Buffer(vt.signatures[0], "hex");
+						} catch (e) {
+							return false;
+						}
+
+						return true;
+					});
+				});
+
+				it("should have secondSignature as hex string", function () {
+					(vt).should.have.property("secondSignature").and.be.type("string").and.match(function () {
+						try {
+							new Buffer(vt.secondSignature, "hex");
+						} catch (e) {
+							return false;
+						}
+
+						return true;
+					});
+				});
+
+				it("should have args", function () {
+					(vt).should.have.property("args").and.not.empty;
+				});
+
+				describe("deleted vote args", function () {
+					it("should be ok", function () {
+						(vt.args).should.be.ok;
+					});
+
+					it("should be array", function () {
+						(vt.args).should.be.an.Array();
+					});
+
+					it("should be not empty", function () {
+						(vt.args).should.be.not.empty;
+					});
+
+					it("should contain one element", function () {
+						(vt.args.length).should.be.equal(1);
+					});
+
+					it("should have public keys in hex", function () {
+						vt.args.forEach(function (v) {
+							(v).should.be.type("string").startWith("-").and.match(function () {
+								try {
+									new Buffer(v.substring(1, v.length), "hex");
+								} catch (e) {
+									return false;
+								}
+
+								return true;
+							});
+						});
+					});
+
+					it("should be equal to sender public key", function () {
+						var v = vt.args[0];
+						(v.substring(1, v.length)).should.be.equal(publicKey);
+					});
+
+				});
+
+			})
+		})
 	});
 
 	describe('crypto sha256 and address', function () {
