@@ -658,7 +658,64 @@ describe("Asch JS", function () {
 		});
 	});
 
+	describe("basic.js", function () {
+		var basic = asch.basic;
 
+		it("should be ok", function () {
+			(basic).should.be.ok;
+		});
+
+		it("should be object", function () {
+			(basic).should.be.type("object");
+		});
+
+		it("should have property setName", function () {
+			(basic).should.have.property("setName");
+		});
+
+		describe("#setName", function () {
+			var setName = basic.setName;
+			var snTrs = null;
+
+			beforeEach("setup #setName", function () {
+				snTrs = setName("secret", "second secret");
+			});
+
+			afterEach("cleanup #setName", function () {
+				snTrs = null;
+			});
+
+
+
+			it("should be function", function () {
+				(setName).should.be.type("function");
+			});
+
+			it("should create setName transaction", function () {
+				(snTrs).should.be.ok;
+				(snTrs).should.be.type("object");
+			});
+
+			describe('returned setName transaction', function () {
+				it("should have id as string", function () {
+					(snTrs.id).should.be.type("string");
+				});
+
+				it('should have type as number and equal 2', function () {
+					(snTrs.type).should.be.type("number").and.equal(2);
+				});
+
+				describe("fee calculation", function () {
+					it('fee for two charcter nickname is 200 XAS', function () {
+						snTrs = setName("aa", "secret", "second secret")
+						(snTrs.fee).should.be.type("number").and.equal(200 * 1e8);
+					});
+
+				});
+
+			});
+		});
+	});
 
 	describe.skip("signature.js", function () {
 		var signature = asch.signature;
