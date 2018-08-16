@@ -895,7 +895,7 @@ describe("Asch JS", function () {
 		});
 	});
 
-	describe("transaction.js", function () {
+	describe.skip("transaction.js", function () {
 		var transaction = asch.transaction;
 
 		it("should be object", function () {
@@ -909,6 +909,11 @@ describe("Asch JS", function () {
 		describe("#createTransaction", function () {
 			var createTransaction = transaction.createTransaction;
 			var trs = null;
+
+			beforeEach('setup #createTransaction', function () {
+
+			})
+
 
 			it("should be a function", function () {
 				(createTransaction).should.be.type("function");
@@ -1114,6 +1119,10 @@ describe("Asch JS", function () {
 			(vote).should.have.property("createVote");
 		});
 
+		it("should have deleteVote property", function () {
+			(vote).should.have.property("deleteVote");
+		})
+
 		describe("#createVote", function () {
 			var createVote = vote.createVote,
 				vt = null,
@@ -1130,6 +1139,7 @@ describe("Asch JS", function () {
 
 			it("should create vote", function () {
 				vt = createVote(publicKeys, "secret", "second secret");
+				vt.should.be.ok;
 			});
 
 			describe("returned vote", function () {
@@ -1141,16 +1151,8 @@ describe("Asch JS", function () {
 					(vt).should.be.type("object");
 				});
 
-				it("should have recipientId string equal to sender", function () {
-					(vt).should.have.property("recipientId").equal(null);;
-				});
-
-				it("should have amount number eaul to 0", function () {
-					(vt).should.have.property("amount").and.be.type("number").and.equal(0);
-				});
-
-				it("should have type number equal to 3", function () {
-					(vt).should.have.property("type").and.be.type("number").and.equal(3);
+				it("should have type number equal to 11", function () {
+					(vt).should.have.property("type").and.be.type("number").and.equal(11);
 				});
 
 				it("should have timestamp number", function () {
@@ -1170,9 +1172,9 @@ describe("Asch JS", function () {
 				});
 
 				it("should have signature hex string", function () {
-					(vt).should.have.property("signature").and.be.type("string").and.match(function () {
+					(vt).should.have.property("signatures").and.be.an.Array().and.match(function () {
 						try {
-							new Buffer(vt.signature, "hex");
+							new Buffer(vt.signatures[0], "hex");
 						} catch (e) {
 							return false;
 						}
@@ -1181,10 +1183,10 @@ describe("Asch JS", function () {
 					});
 				});
 
-				it("should have second signature hex string", function () {
-					(vt).should.have.property("signSignature").and.be.type("string").and.match(function () {
+				it("should have secondSignature as hex string", function () {
+					(vt).should.have.property("secondSignature").and.be.type("string").and.match(function () {
 						try {
-							new Buffer(vt.signSignature, "hex");
+							new Buffer(vt.secondSignature, "hex");
 						} catch (e) {
 							return false;
 						}
@@ -1193,51 +1195,51 @@ describe("Asch JS", function () {
 					});
 				});
 
-				it("should be signed correctly", function () {
+				it.skip("should be signed correctly", function () {
 					var result = asch.crypto.verify(vt);
 					(result).should.be.ok;
 				});
 
-				it("should be second signed correctly", function () {
+				it.skip("should be second signed correctly", function () {
 					var result = asch.crypto.verifySecondSignature(vt, asch.crypto.getKeys("second secret").publicKey);
 					(result).should.be.ok;
 				});
 
-				it("should not be signed correctly now", function () {
+				it.skip("should not be signed correctly now", function () {
 					vt.amount = 100;
 					var result = asch.crypto.verify(vt);
 					(result).should.be.not.ok;
 				});
 
-				it("should not be second signed correctly now", function () {
+				it.skip("should not be second signed correctly now", function () {
 					vt.amount = 100;
 					var result = asch.crypto.verifySecondSignature(vt, asch.crypto.getKeys("second secret").publicKey);
 					(result).should.be.not.ok;
 				});
 
-				it("should have asset", function () {
-					(vt).should.have.property("asset").and.not.empty;
+				it("should have args", function () {
+					(vt).should.have.property("args").and.not.empty;
 				});
 
-				describe("vote asset", function () {
+				describe("vote args", function () {
 					it("should be ok", function () {
-						(vt.asset.vote).should.have.property("votes").and.be.ok;
+						(vt.args).should.be.ok;
 					});
 
-					it("should be object", function () {
-						(vt.asset.vote.votes).should.be.type("object");
+					it("should be array", function () {
+						(vt.args).should.be.an.Array();
 					});
 
 					it("should be not empty", function () {
-						(vt.asset.vote.votes).should.be.not.empty;
+						(vt.args).should.be.not.empty;
 					});
 
 					it("should contains one element", function () {
-						(vt.asset.vote.votes.length).should.be.equal(1);
+						(vt.args.length).should.be.equal(1);
 					});
 
 					it("should have public keys in hex", function () {
-						vt.asset.vote.votes.forEach(function (v) {
+						vt.args.forEach(function (v) {
 							(v).should.be.type("string").startWith("+").and.match(function () {
 								try {
 									new Buffer(v.substring(1, v.length), "hex");
@@ -1251,7 +1253,7 @@ describe("Asch JS", function () {
 					});
 
 					it("should be equal to sender public key", function () {
-						var v = vt.asset.vote.votes[0];
+						var v = vt.args[0];
 						(v.substring(1, v.length)).should.be.equal(publicKey);
 					});
 				})
