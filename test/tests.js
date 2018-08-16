@@ -948,9 +948,7 @@ describe("Asch JS", function () {
 					})
 				});
 
-				it("should have recipientId as string and to be equal 58191285901858109", function () {
-					(trs.recipientId).should.be.type("string").and.equal("58191285901858109");
-				});
+
 
 				it("should have amount as number and eqaul to 1000", function () {
 					(trs.amount).should.be.type("number").and.equal(1000);
