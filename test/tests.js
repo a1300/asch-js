@@ -633,40 +633,26 @@ describe("Asch JS", function () {
 					(delegateTrs.args.length).should.equal(0);
 				})
 
-				it("should be signed correctly", function () {
+				it.skip("should be signed correctly", function () {
 					var result = asch.crypto.verify(delegateTrs, keys.publicKey);
 					(result).should.be.ok;
 				});
 
-				it("should be second signed correctly", function () {
+				it.skip("should be second signed correctly", function () {
 					var result = asch.crypto.verifySecondSignature(delegateTrs, secondKeys.publicKey);
 					(result).should.be.ok;
 				});
 
-				it("should not be signed correctly now", function () {
+				it.skip("should not be signed correctly now", function () {
 					delegateTrs.amount = 100;
 					var result = asch.crypto.verify(delegateTrs, keys.publicKey);
 					(result).should.be.not.ok;
 				});
 
-				it("should not be second signed correctly now", function () {
+				it.skip("should not be second signed correctly now", function () {
 					delegateTrs.amount = 100;
 					var result = asch.crypto.verify(delegateTrs, secondKeys.publicKey);
 					(result).should.be.not.ok;
-				});
-
-				describe("delegate asset", function () {
-					it("should be ok", function () {
-						(delegateTrs.asset.delegate).should.be.ok;
-					});
-
-					it("should be object", function () {
-						(delegateTrs.asset.delegate).should.be.type("object");
-					});
-
-					it("should be have property username", function () {
-						(delegateTrs.asset.delegate).should.have.property("username").and.be.type("string").and.equal("delegate");
-					});
 				});
 			});
 		});
