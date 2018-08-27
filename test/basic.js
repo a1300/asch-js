@@ -5,6 +5,17 @@ var asch = require("../index.js");
 
 describe("basic.js", () => {
   var basic = asch.basic;
+  var setName;
+  var trs;
+
+  beforeEach(() => {
+    setName = asch.basic.setName;
+    trs = basic.setName("sqfasd", "secret", null)
+  });
+
+  afterEach(() => {
+    trs = null;
+  });
 
   it("should be ok", () => {
     (basic).should.be.ok;
@@ -19,45 +30,30 @@ describe("basic.js", () => {
   });
 
   describe("#setName", () => {
-    var setName = basic.setName;
-    var snTrs = null;
-
-    beforeEach("setup #setName", () => {
-      snTrs = setName("secret", "second secret");
-    });
-
-    afterEach("cleanup #setName", () => {
-      snTrs = null;
-    });
-
-
-
     it("should be function", () => {
       (setName).should.be.type("function");
     });
 
     it("should create setName transaction", () => {
-      (snTrs).should.be.ok;
-      (snTrs).should.be.type("object");
+      (trs).should.be.ok;
+      (trs).should.be.type("object");
     });
 
     describe('returned setName transaction', () => {
       it("should have id as string", () => {
-        (snTrs.id).should.be.type("string");
+        (trs.id).should.be.type("string");
       });
 
       it('should have type as number and equal 2', () => {
-        (snTrs.type).should.be.type("number").and.equal(2);
+        (trs.type).should.be.type("number").and.equal(2);
       });
 
       describe("fee calculation", () => {
-        it('fee for two charcter nickname is 200 XAS', () => {
-          snTrs = setName("aa", "secret", "second secret")
-          (snTrs.fee).should.be.type("number").and.equal(200 * 1e8);
+        it('fee for two character nickname is 200 XAS', () => {
+          trs = setName("aa", "secret", "second secret");
+          (trs.fee).should.be.type("number").and.equal(200 * 1e8);
         });
-
       });
-
     });
   });
 });
