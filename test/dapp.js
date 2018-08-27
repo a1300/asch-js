@@ -3,9 +3,44 @@ var crypto_lib = require("crypto-browserify");
 var should = require("should");
 var asch = require("../index.js");
 
+var options = {
+  "name": "asch-dapp-cctime",
+  "link": "https://github.com/AschPlatform/asch-dapp-cctime/archive/master.zip",
+  "category": 1,
+  "desc": "Decentralized news channel",
+  "tags": "asch,dapp,demo,cctime",
+  "icon": "http://o7dyh3w0x.bkt.clouddn.com/hello.png",
+  "type": 0,
+  "delegates": [
+    "8b1c24a0b9ba9b9ccf5e35d0c848d582a2a22cca54d42de8ac7b2412e7dc63d4",
+    "aa7dcc3afd151a549e826753b0547c90e61b022adb26938177904a73fc4fee36",
+    "e29c75979ac834b871ce58dc52a6f604f8f565dea2b8925705883b8c001fe8ce",
+    "55ad778a8ff0ce4c25cb7a45735c9e55cf1daca110cfddee30e789cb07c8c9f3",
+    "982076258caab20f06feddc94b95ace89a2862f36fea73fa007916ab97e5946a"
+  ],
+  "unlockDelegates": 3
+};
+
+
+
 describe("dapp.js", () => {
   var dapp = asch.dapp;
 
+  var createDApp = dapp.createDApp;
+  var trs;
+  var keys;
+  var secondKeys;
+
+
+  beforeEach(() => {
+    trs = createDApp(options, "secret", null);
+    keys = asch.crypto.getKeys("secret");
+    secondKeys = asch.crypto.getKeys("secret 2");
+  })
+
+  afterEach(() => {
+    trs = null;
+  })
 
   it("should be object", () => {
     (dapp).should.be.type("object");
@@ -16,38 +51,6 @@ describe("dapp.js", () => {
   })
 
   describe("#createDApp", () => {
-    var createDApp = dapp.createDApp;
-    var trs = null;
-
-    var options = {
-      "name": "asch-dapp-cctime",
-      "link": "https://github.com/AschPlatform/asch-dapp-cctime/archive/master.zip",
-      "category": 1,
-      "description": "Decentralized news channel",
-      "tags": "asch,dapp,demo,cctime",
-      "icon": "http://o7dyh3w0x.bkt.clouddn.com/hello.png",
-      "type": 0,
-      "delegates": [
-        "8b1c24a0b9ba9b9ccf5e35d0c848d582a2a22cca54d42de8ac7b2412e7dc63d4",
-        "aa7dcc3afd151a549e826753b0547c90e61b022adb26938177904a73fc4fee36",
-        "e29c75979ac834b871ce58dc52a6f604f8f565dea2b8925705883b8c001fe8ce",
-        "55ad778a8ff0ce4c25cb7a45735c9e55cf1daca110cfddee30e789cb07c8c9f3",
-        "982076258caab20f06feddc94b95ace89a2862f36fea73fa007916ab97e5946a"
-      ],
-      "unlockDelegates": 3
-    }
-
-    beforeEach('setup dapp.js', () => {
-      trs = createDApp(options, "secret", null);
-    })
-
-    afterEach('cleanup dapp.js', () => {
-      trs = null;
-    })
-
-
-
-
     it("should be a function", () => {
       (createDApp).should.be.type("function");
     });
@@ -63,9 +66,6 @@ describe("dapp.js", () => {
     });
 
     describe("returned dapp", () => {
-      var keys = asch.crypto.getKeys("secret");
-      var secondKeys = asch.crypto.getKeys("secret 2");
-
       it("should be object", () => {
         (trs).should.be.type("object");
       });
@@ -111,20 +111,14 @@ describe("dapp.js", () => {
           (trs.args).should.be.an.Array()
         });
 
-        // options.name,
-        // options.description,
-        // options.link,
-        // options.icon,
-        // options.delegates,
-        // options.unlockDelegates
-
         it("should have name item", () => {
-          (trs.args[0]).should.be.type("string").and.equal(options.name);
+          should(trs.args[0]).be.type("string").and.equal(options.name);
         });
 
         it("should have description item", () => {
-          (trs.args[1]).should.be.type("string").and.equal(options.description)
-        })
+          console.log(JSON.stringify(trs.args, null, 2))
+          should(trs.args[1]).be.type("string").and.equal(options.desc);
+        });
 
         it("should have link item", () => {
           (trs.args[2]).should.be.type("string").and.equal(options.link);
@@ -150,7 +144,6 @@ describe("dapp.js", () => {
           } catch (e) {
             return false;
           }
-
           return true;
         })
       });
@@ -163,7 +156,6 @@ describe("dapp.js", () => {
           } catch (e) {
             return false;
           }
-
           return true;
         });
       });
