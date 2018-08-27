@@ -3,7 +3,7 @@ var crypto_lib = require("crypto-browserify");
 var should = require("should");
 var asch = require("../index.js");
 
-describe.skip("transaction.js", () => {
+describe("transaction.js", () => {
   var transaction = asch.transaction;
 
   it("should be object", () => {
@@ -16,11 +16,16 @@ describe.skip("transaction.js", () => {
 
   describe("#createTransaction", () => {
     var createTransaction = transaction.createTransaction;
-    var trs = null;
+    var trs;
 
-    beforeEach('setup #createTransaction', () => {
-
+    beforeEach(() => {
+      trs = createTransaction("AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB", 1000, "", "secret");
     })
+
+    afterEach(() => {
+      trs = null;
+    });
+
 
 
     it("should be a function", () => {
