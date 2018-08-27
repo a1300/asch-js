@@ -21,15 +21,6 @@ describe("Asch JS", () => {
 		});
 	});
 
-
-
-
-
-
-
-	describe("transfer.js", () => {
-	});
-
 	describe("vote.js", () => {
 		var vote = asch.vote;
 
