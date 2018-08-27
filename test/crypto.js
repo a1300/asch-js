@@ -6,6 +6,38 @@ var asch = require("../index.js");
 describe("crypto.js", () => {
   var crypto = asch.crypto;
 
+  var bytes;
+  var getBytes;
+  var getHash;
+  var getId;
+  var getFee;
+  var fixedPoint;
+  var sign;
+  var secondSign;
+  var getKeys;
+  var getAddress;
+  var verify;
+  var verifySecondSignature;
+
+  beforeEach(() => {
+    bytes = null;
+    getBytes = crypto.getBytes;
+    getHash = crypto.getHash;
+    getId = crypto.getId;
+    getFee = crypto.getFee;
+    fixedPoint = crypto.fixedPoint;
+    sign = crypto.sign;
+    secondSign = crypto.secondSign;
+    getKeys = crypto.getKeys;
+    getAddress = crypto.getAddress;
+    verify = crypto.verify;
+    verifySecondSignature = crypto.verifySecondSignature;
+  });
+
+  afterEach(() => {
+    bytes = null;
+  });
+
   it("should be ok", () => {
     (crypto).should.be.ok;
   });
@@ -22,9 +54,6 @@ describe("crypto.js", () => {
   });
 
   describe("#getBytes", () => {
-    var getBytes = crypto.getBytes;
-    var bytes = null;
-
     it("should be ok", () => {
       (getBytes).should.be.ok;
     });
@@ -34,7 +63,7 @@ describe("crypto.js", () => {
     });
 
     it("should return Buffer of simply transaction and buffer most be 101 length", () => {
-      var transaction = {
+      let transaction = {
         id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
         timestamp:67290342,
         senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
@@ -47,16 +76,16 @@ describe("crypto.js", () => {
         type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
         signatures:null,
         args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
-      }
+      };
 
       bytes = getBytes(transaction);
-      (bytes).should.be.ok;
-      (bytes).should.be.type("object");
-      (bytes.length).should.be.equal(101);
+      should(bytes).be.ok;
+      should(bytes).be.type("object");
+      should(bytes.length).be.equal(101);
     });
 
     it("should return Buffer of transaction with second signature and buffer most be 164 length", () => {
-      var transaction = {
+      let transaction = {
         id:"83d874427e4a3141ab3b43e7bbdf800ee2bd4b1d6e9ade97daf6afd8bdd468d7",
         timestamp:67291463,
         senderPublicKey:"a7cfd49d25ce247568d39b17fca221d9b2ff8402a9f6eb6346d2291a5c81374c",
@@ -71,18 +100,16 @@ describe("crypto.js", () => {
         signature:"bb9a543f0163a3e9fdf2b7e25aabc84e11b0250f133651459bf8f5751bcc9615d331032a141a2495f1a0bcb2bbd49e37be3b6a6cb4beb723f6ca4fcac63da802",
         signatures:null,
         args:[10000000000,"AGcqEW2B2WR45eDDndMq4a72k1wMSW4wsz"]
-      }
+      };
 
       bytes = getBytes(transaction);
-      (bytes).should.be.ok;
-      (bytes).should.be.type("object");
-      (bytes.length).should.be.equal(164);
+      should(bytes).be.ok;
+      should(bytes).be.type("object");
+      should(bytes.length).be.equal(164);
     });
   });
 
   describe("#getHash", () => {
-    var getHash = crypto.getHash;
-
     it("should be ok", () => {
       (getHash).should.be.ok;
     });
@@ -92,7 +119,7 @@ describe("crypto.js", () => {
     })
 
     it("should return Buffer and Buffer must be 32 bytes length", () => {
-      var transaction = {
+      let transaction = {
         id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
         timestamp:67290342,
         senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
@@ -105,18 +132,16 @@ describe("crypto.js", () => {
         type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
         signatures:null,
         args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
-      }
+      };
 
       var result = getHash(transaction);
-      (result).should.be.ok;
-      (result).should.be.type("object");
-      (result.length).should.be.equal(32);
+      should(result).be.ok;
+      should(result).be.type("object");
+      should(result.length).be.equal(32);
     });
   });
 
   describe("#getId", () => {
-    var getId = crypto.getId;
-
     it("should be ok", () => {
       (getId).should.be.ok;
     });
@@ -147,11 +172,9 @@ describe("crypto.js", () => {
   });
 
   describe("#getFee", () => {
-    var getFee = crypto.getFee;
-
     it("should be ok", () => {
       (getFee).should.be.ok;
-    })
+    });
 
     it("should be a function", () => {
       (getFee).should.be.type("function");
@@ -185,8 +208,6 @@ describe("crypto.js", () => {
   });
 
   describe("fixedPoint", () => {
-    var fixedPoint = crypto.fixedPoint;
-
     it("should be ok", () => {
       (fixedPoint).should.be.ok;
     })
@@ -201,8 +222,6 @@ describe("crypto.js", () => {
   });
 
   describe("#sign", () => {
-    var sign = crypto.sign;
-
     it("should be ok", () => {
       (sign).should.be.ok;
     });
@@ -213,8 +232,6 @@ describe("crypto.js", () => {
   });
 
   describe("#secondSign", () => {
-    var secondSign = crypto.secondSign;
-
     it("should be ok", () => {
       (secondSign).should.be.ok;
     });
@@ -225,8 +242,6 @@ describe("crypto.js", () => {
   });
 
   describe("#getKeys", () => {
-    var getKeys = crypto.getKeys;
-
     it("should be ok", () => {
       (getKeys).should.be.ok;
     });
@@ -236,7 +251,7 @@ describe("crypto.js", () => {
     });
 
     it("should return two keys in hex", () => {
-      var keys = getKeys("secret");
+      let keys = getKeys("secret");
 
       (keys).should.be.ok;
       (keys).should.be.type("object");
@@ -264,8 +279,6 @@ describe("crypto.js", () => {
   });
 
   describe("#getAddress", () => {
-    var getAddress = crypto.getAddress;
-
     it("should be ok", () => {
       (getAddress).should.be.ok;
     })
@@ -275,8 +288,8 @@ describe("crypto.js", () => {
     });
 
     it("should generate address by publicKey", () => {
-      var keys = crypto.getKeys("secret");
-      var address = getAddress(keys.publicKey);
+      let keys = crypto.getKeys("secret");
+      let address = getAddress(keys.publicKey);
 
       (address).should.be.ok;
       (address).should.be.type("string");
@@ -285,8 +298,6 @@ describe("crypto.js", () => {
   });
 
   describe("#verify", () => {
-    var verify = crypto.verify;
-
     it("should be ok", () => {
       (verify).should.be.ok;
     })
@@ -297,8 +308,6 @@ describe("crypto.js", () => {
   });
 
   describe("#verifySecondSignature", () => {
-    var verifySecondSignature = crypto.verifySecondSignature;
-
     it("should be ok", () => {
       (verifySecondSignature).should.be.ok;
     });
