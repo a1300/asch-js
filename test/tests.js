@@ -21,8 +21,6 @@ describe("Asch JS", () => {
 		});
 	});
 
-
-
 	describe('crypto sha256 and address', () => {
 		it('should be equal to the expected address', () => {
 			asch.crypto.getAddress('7a91b9bfc0ea185bf3ade9d264da273f7fe19bf71008210b1d7239c82dd3ad20').should.be.equal('AFbYJhiJb3DXzHy5ZP24mKw21M2dCBJCXP')
@@ -30,5 +28,4 @@ describe("Asch JS", () => {
 			asch.crypto.getAddress(publicKeyBuffer).should.be.equal('AFbYJhiJb3DXzHy5ZP24mKw21M2dCBJCXP')
 		})
 	})
-
 });
