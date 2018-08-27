@@ -116,7 +116,6 @@ describe("dapp.js", () => {
         });
 
         it("should have description item", () => {
-          console.log(JSON.stringify(trs.args, null, 2))
           should(trs.args[1]).be.type("string").and.equal(options.desc);
         });
 
@@ -162,6 +161,7 @@ describe("dapp.js", () => {
 
       it.skip("should be signed correctly", () => {
         var result = asch.crypto.verify(trs);
+        
         (result).should.be.ok;
       });
 
@@ -184,17 +184,17 @@ describe("dapp.js", () => {
       });
 
       it("should be ok to verify bytes", () => {
-        var data1 = 'a1b2c3d4'
-        var secret = 'secret1'
-        var keys = asch.crypto.getKeys(secret)
-        var signature = asch.crypto.signBytes(data1, keys)
-        var result = asch.crypto.verifyBytes(data1, signature, keys.publicKey)
-        result.should.be.ok
+        var data1 = 'a1b2c3d4';
+        var secret = 'secret1';
+        var keys = asch.crypto.getKeys(secret);
+        var signature = asch.crypto.signBytes(data1, keys);
+        var result = asch.crypto.verifyBytes(data1, signature, keys.publicKey);
+        (result).should.be.ok;
 
-        var data2 = new Buffer('a1b2c3d4', 'hex')
-        signature = asch.crypto.signBytes(data2, keys)
-        result = asch.crypto.verifyBytes(data2, signature, keys.publicKey)
-        result.should.be.ok
+        var data2 = new Buffer('a1b2c3d4', 'hex');
+        signature = asch.crypto.signBytes(data2, keys);
+        result = asch.crypto.verifyBytes(data2, signature, keys.publicKey);
+        (result).should.be.ok;
       })
     });
   });
