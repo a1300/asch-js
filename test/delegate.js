@@ -5,6 +5,24 @@ var asch = require("../index.js");
 
 describe("delegate.js", () => {
   var delegate = asch.delegate;
+  var createDelegate;
+
+  var keys;
+  var secondKeys;
+  var trs;
+
+  beforeEach(() => {
+    createDelegate = delegate.createDelegate;
+    keys = asch.crypto.getKeys("secret");
+    secondKeys = asch.crypto.getKeys("secret 2");
+    trs = createDelegate("secret", "secret 2");
+  });
+
+  afterEach(() => {
+    trs = null;
+  });
+
+
 
   it("should be ok", () => {
     (delegate).should.be.ok;
@@ -19,9 +37,6 @@ describe("delegate.js", () => {
   });
 
   describe("#createDelegate", () => {
-    var createDelegate = delegate.createDelegate;
-
-
     it("should be ok", () => {
       (createDelegate).should.be.ok;
     });
@@ -31,42 +46,30 @@ describe("delegate.js", () => {
     });
 
     it("should create delegate", () => {
-      delegateTrs = createDelegate("secret", "secret 2");
+      trs = createDelegate("secret", "secret 2");
     });
 
     describe("returned delegate", () => {
-      var keys = asch.crypto.getKeys("secret");
-      var secondKeys = asch.crypto.getKeys("secret 2");
-      var delegateTrs = null;
-
-      beforeEach('setup delegate.js', () => {
-        delegateTrs = createDelegate("secret", "secret 2");
-      })
-
-      afterEach('clenup delegate.js', () => {
-        delegateTrs = null;
-      })
-
       it("should be ok", () => {
-        (delegateTrs).should.be.ok;
+        (trs).should.be.ok;
       });
 
       it("should be object", () => {
-        (delegateTrs).should.be.type("object");
+        (trs).should.be.type("object");
       });
 
       it("should have type equal 10", () => {
-        (delegateTrs).should.have.property("type").and.type("number").and.equal(10);
+        (trs).should.have.property("type").and.type("number").and.equal(10);
       });
 
       it("should have timestamp number", () => {
-        (delegateTrs).should.have.property("timestamp").and.type("number");
+        (trs).should.have.property("timestamp").and.type("number");
       });
 
       it("should have senderPublicKey in hex", () => {
-        (delegateTrs).should.have.property("senderPublicKey").and.type("string").and.match(() => {
+        (trs).should.have.property("senderPublicKey").and.type("string").and.match(() => {
           try {
-            new Buffer(delegateTrs.senderPublicKey, "hex");
+            new Buffer(trs.senderPublicKey, "hex");
           } catch (e) {
             return false;
           }
@@ -76,9 +79,9 @@ describe("delegate.js", () => {
       });
 
       it("should have signature in hex in signatures array", () => {
-        (delegateTrs).should.have.property("signatures").and.be.an.Array().and.match(() => {
+        (trs).should.have.property("signatures").and.be.an.Array().and.match(() => {
           try {
-            new Buffer(delegateTrs.signatures[0], "hex");
+            new Buffer(trs.signatures[0], "hex");
           } catch (e) {
             return false;
           }
@@ -88,9 +91,9 @@ describe("delegate.js", () => {
       });
 
       it("should have second signature in hex", () => {
-        (delegateTrs).should.have.property("secondSignature").and.match(() => {
+        (trs).should.have.property("secondSignature").and.match(() => {
           try {
-            new Buffer(delegateTrs.secondSignature, "hex");
+            new Buffer(trs.secondSignature, "hex");
           } catch (e) {
             return false;
           }
@@ -100,29 +103,29 @@ describe("delegate.js", () => {
       });
 
       it("should have args array", () => {
-        (delegateTrs).should.have.property("args").and.be.an.Array();
-        (delegateTrs.args.length).should.equal(0);
+        (trs).should.have.property("args").and.be.an.Array();
+        (trs.args.length).should.equal(0);
       })
 
       it.skip("should be signed correctly", () => {
-        var result = asch.crypto.verify(delegateTrs, keys.publicKey);
+        var result = asch.crypto.verify(trs, keys.publicKey);
         (result).should.be.ok;
       });
 
       it.skip("should be second signed correctly", () => {
-        var result = asch.crypto.verifySecondSignature(delegateTrs, secondKeys.publicKey);
+        var result = asch.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.ok;
       });
 
       it.skip("should not be signed correctly now", () => {
-        delegateTrs.amount = 100;
-        var result = asch.crypto.verify(delegateTrs, keys.publicKey);
+        trs.amount = 100;
+        var result = asch.crypto.verify(trs, keys.publicKey);
         (result).should.be.not.ok;
       });
 
       it.skip("should not be second signed correctly now", () => {
-        delegateTrs.amount = 100;
-        var result = asch.crypto.verify(delegateTrs, secondKeys.publicKey);
+        trs.amount = 100;
+        var result = asch.crypto.verify(trs, secondKeys.publicKey);
         (result).should.be.not.ok;
       });
     });
