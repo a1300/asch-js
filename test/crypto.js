@@ -85,7 +85,7 @@ describe("crypto.js", () => {
       should(bytes.length).be.equal(165);
     });
 
-    it.only("should return Buffer of transaction with second signature and buffer most be 229 length", () => {
+    it("should return Buffer of transaction with second signature and buffer most be 229 length", () => {
       let transaction = {
         "type": 1,
         "timestamp": 68365928,
