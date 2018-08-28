@@ -62,50 +62,51 @@ describe("crypto.js", () => {
       (getBytes).should.be.type("function");
     });
 
-    it("should return Buffer of simply transaction and buffer most be 101 length", () => {
+    it("should return Buffer of simply transaction and buffer most be 165 length", () => {
       let transaction = {
-        id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
-        timestamp:67290342,
-        senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
-        senderId:"ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
-        message:null,
-        fee:10000000,
-        recipientId:"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB",
-        amount:200000000000,
-        asset:{},
-        type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
-        signatures:null,
-        args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
-      };
+        "type": 1,
+        "timestamp": 68365026,
+        "fee": 10000000,
+        "args": [
+          200000000000,
+          "AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"
+        ],
+        "senderPublicKey": "116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
+        "senderId": "ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
+        "signatures": [
+          "6b9a02208c0c36a0adf527d117cc3840f4b6c0a6eeac8cd212635f120592a101b68aeae0efe43ee28b0fd2add6fdb14f6b51b5ebff467b02909f4cdd66276603"
+        ],
+        "id": "43a9ed49665d7e905b717e54f39b1d9976e3332608bacf6083a3e130a0d12eed"
+      }
 
       bytes = getBytes(transaction);
       should(bytes).be.ok;
       should(bytes).be.type("object");
-      should(bytes.length).be.equal(101);
+      should(bytes.length).be.equal(165);
     });
 
-    it("should return Buffer of transaction with second signature and buffer most be 164 length", () => {
+    it.only("should return Buffer of transaction with second signature and buffer most be 229 length", () => {
       let transaction = {
-        id:"83d874427e4a3141ab3b43e7bbdf800ee2bd4b1d6e9ade97daf6afd8bdd468d7",
-        timestamp:67291463,
-        senderPublicKey:"a7cfd49d25ce247568d39b17fca221d9b2ff8402a9f6eb6346d2291a5c81374c",
-        senderId:"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB",
-        secondSignature:"a231be53073cece62b1a9c373d5fd40169d7e7ea9cb0bf96ab849b9cf9992280378207fd0ec11382bbdf7e04efdd54d56ba066a531ae8c8bc2fe04ea448d5f08",
-        message:null,
-        fee:10000000,
-        recipientId:"AGcqEW2B2WR45eDDndMq4a72k1wMSW4wsz",
-        amount:10000000000,
-        asset:{},
-        type:0,
-        signature:"bb9a543f0163a3e9fdf2b7e25aabc84e11b0250f133651459bf8f5751bcc9615d331032a141a2495f1a0bcb2bbd49e37be3b6a6cb4beb723f6ca4fcac63da802",
-        signatures:null,
-        args:[10000000000,"AGcqEW2B2WR45eDDndMq4a72k1wMSW4wsz"]
+        "type": 1,
+        "timestamp": 68365928,
+        "fee": 10000000,
+        "args": [
+          200000000000,
+          "AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"
+        ],
+        "senderPublicKey": "116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
+        "senderId": "ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
+        "signatures": [
+          "e1da25b8278d9cf4dcb32d8be73681ce701f0f01518b3d68e80c235a0f9d7d3fcfae7d454976f82535bc181fccd0f7cefc2fe3f1f158e76789a775bdce1d2906"
+        ],
+        "secondSignature": "067ec26a4bc1cb84926b49bb85e5701bebb2a8d4d4aef2c7fe075e2b6ca7e8a4c3ca77e709262d58760f4f3f3d00bdfc3f32c2be6c92856b29366e4d4ef77703",
+        "id": "7608330225429661920fbdad67abc7c8b220c212a112bd76a1e33134cc082473"
       };
 
       bytes = getBytes(transaction);
       should(bytes).be.ok;
       should(bytes).be.type("object");
-      should(bytes.length).be.equal(164);
+      should(bytes.length).be.equal(229);
     });
   });
 
@@ -119,19 +120,19 @@ describe("crypto.js", () => {
     })
 
     it("should return Buffer and Buffer must be 32 bytes length", () => {
-      let transaction = {
-        id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
-        timestamp:67290342,
-        senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
-        senderId:"ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
-        message:null,
-        fee:10000000,
-        recipientId:"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB",
-        amount:200000000000,
-        asset:{},
-        type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
-        signatures:null,
-        args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
+      var transaction = {
+        "type": 1,
+        "timestamp": 68365026,
+        "fee": 10000000,
+        "args": [
+          200000000000,
+          "AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"
+        ],
+        "senderPublicKey": "116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
+        "senderId": "ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
+        "signatures": [
+          "6b9a02208c0c36a0adf527d117cc3840f4b6c0a6eeac8cd212635f120592a101b68aeae0efe43ee28b0fd2add6fdb14f6b51b5ebff467b02909f4cdd66276603"
+        ]
       };
 
       var result = getHash(transaction);
