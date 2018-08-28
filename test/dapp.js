@@ -82,7 +82,7 @@ describe("dapp.js", () => {
         (trs.fee).should.be.type("number").and.equal(10000000000);
       });
 
-      it.skip("should have senderPublicKey as hex string", () => {
+      it("should have senderPublicKey as hex string", () => {
         (trs.senderPublicKey).should.be.type("string").and.match(function (given) {
           try {
             new Buffer("hex");
@@ -172,12 +172,16 @@ describe("dapp.js", () => {
       });
 
       it.skip("should be second signed correctly", () => {
+        trs = createDApp(options, "secret", "secret 2");
+
         trs.amount = 0;
         var result = asch.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.ok;
       });
 
       it.skip("should not be second signed correctly now", () => {
+        trs = createDApp(options, "secret", "secret 2");
+
         trs.amount = 10000;
         var result = asch.crypto.verifySecondSignature(trs, secondKeys.publicKey);
         (result).should.be.not.ok;
