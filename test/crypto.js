@@ -150,24 +150,24 @@ describe("crypto.js", () => {
       (getId).should.be.type("function");
     });
 
-    it.skip("should return string id and be equal to 13987348420913138422", () => {
+    it("should return string id and be equal to 43a9ed49665d7e905b717...", () => {
       var transaction = {
-        id: "4041142bc239ac7a25b7bfe142c3d7480d347ede08af17333d0f137e9d034b2a",
-        timestamp:67290342,
-        senderPublicKey:"116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
-        senderId:"ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
-        message:null,
-        fee:10000000,
-        recipientId:"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB",
-        amount:200000000000,
-        asset:{},
-        type:0,signature:"b788d6365696bd9925e940b3491bac9baeac7b9ba4e59569011d17c09093b34a2f1c5be8a067b970db4fae56dec1135f1cea663fde4e7c95be96911169081408",
-        signatures:null,
-        args:[200000000000,"AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"]
-      }
+        "type": 1,
+        "timestamp": 68365026,
+        "fee": 10000000,
+        "args": [
+          200000000000,
+          "AHMCKebuL2nRYDgszf9J2KjVZzAw95WUyB"
+        ],
+        "senderPublicKey": "116025d5664ce153b02c69349798ab66144edd2a395e822b13587780ac9c9c09",
+        "senderId": "ABuH9VHV3cFi9UKzcHXGMPGnSC4QqT2cZ5",
+        "signatures": [
+          "6b9a02208c0c36a0adf527d117cc3840f4b6c0a6eeac8cd212635f120592a101b68aeae0efe43ee28b0fd2add6fdb14f6b51b5ebff467b02909f4cdd66276603"
+        ]
+      };
 
       var id = getId(transaction);
-      (id).should.be.type("string").and.equal("f60a26da470b1dc233fd526ed7306c1d84836f9e2ecee82c9ec47319e0910474");
+      (id).should.be.type("string").and.equal("43a9ed49665d7e905b717e54f39b1d9976e3332608bacf6083a3e130a0d12eed");
     });
   });
 
