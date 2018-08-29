@@ -50,33 +50,39 @@ describe("basic.js", () => {
 
       describe("fee calculation", () => {
         it('fee for 2 character nickname is 200 XAS', () => {
-          trs = setName("a".repeat(2), "secret", "second secret");
+          let nickname = "a".repeat(2);
+          trs = setName(nickname, "secret", "second secret");
           (trs.fee).should.be.type("number").and.equal(200 * 1e8);
         });
 
         it('fee for 3 character nickname is 100 XAS', () => {
-          trs = setName("b".repeat(3), "secret", "second secret");
-          (trs.fee).should.be.type("number").and.equal(100 * 1e8)
+          let nickname = "b".repeat(3);
+          trs = setName(nickname, "secret", "second secret");
+          (trs.fee).should.be.type("number").and.equal(100 * 1e8);
         });
 
         it('fee for 4 character nickname is 80 XAS', () => {
-          trs = setName("c".repeat(4), "secret", "second secret");
+          let nickname = "c".repeat(4);
+          trs = setName(nickname, "secret", "second secret");
           (trs.fee).should.be.type("number").and.equal(80 * 1e8)
         });
 
         it('fee for 5 character nickname is 40 XAS', () => {
-          trs = setName("d".repeat(5), "secret", "second secret");
-          (trs.fee).should.be.type("number").and.equal(40 * 1e8)
+          let nickname = "d".repeat(5);
+          trs = setName(nickname, "secret", "second secret");
+          (trs.fee).should.be.type("number").and.equal(40 * 1e8);
         });
 
         it('fee for 10 character nickname is 10 XAS', () => {
-          trs = setName("e".repeat(10), "secret", "second secret");
-          (trs.fee).should.be.type("number").and.equal(10 * 1e8)
+          let nickname = "e".repeat(10);
+          trs = setName(nickname, "secret", "second secret");
+          (trs.fee).should.be.type("number").and.equal(10 * 1e8);
         });
 
         it('fee for 15 character nickname is 1 XAS', () => {
-          trs = setName("f".repeat(15), "secret", "second secret");
-          (trs.fee).should.be.type("number").and.equal(1 * 1e8)
+          let nickname = "f".repeat(15);
+          trs = setName(nickname, "secret", "second secret");
+          (trs.fee).should.be.type("number").and.equal(1 * 1e8);
         });
       });
     });
