@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "index": "file:types/index.d.ts"
+  }
+}
